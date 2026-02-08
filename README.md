@@ -10,8 +10,8 @@
   <!-- Self-hosted tokei_rs instance, only works for repos in the SwiftcordApp org -->
   <img alt="" src="http://vinkwok.mywire.org/tokei/github/SwiftcordApp/Swiftcord?style=for-the-badge&category=code">
   
-  <a aria-label="Download" href="https://github.com/SwiftcordApp/Swiftcord/releases/latest">
-    <img alt="" src="https://img.shields.io/github/v/release/cryptoAlgorithm/Swiftcord?style=for-the-badge&labelColor=black&color=eb563c&label=Download">
+  <a aria-label="Download" href="https://github.com/dohasing/Swiftcord/releases/latest">
+    <img alt="" src="https://img.shields.io/github/v/release/dohasing/Swiftcord?style=for-the-badge&labelColor=black&color=eb563c&label=Download">
   </a>
 </p>
 
@@ -26,7 +26,7 @@
 
 Swiftcord is beautiful, follows design principals of the official client while keeping the macOS look and feel that you love, and most importantly, its (really) fast!
 
-Powered by [DiscordKit](https://github.com/SwiftcordApp/DiscordKit), a Swift Discord implementation built
+Powered by [DiscordKit](https://github.com/dohasing/DiscordKit), a Swift Discord implementation built
 from the ground up.
 
 **If you like this project, please smash the star button and be one of my stargazers 🌟! It motivates
@@ -126,7 +126,7 @@ to expand the answer
 ---
 
 ## Roadmap
-Take a look at Swiftcord's [GitHub Projects board](https://github.com/orgs/SwiftcordApp/projects/1)
+Take a look at Swiftcord's [GitHub Projects board](https://github.com/orgs/SwiftcordApp-X/projects/1)
 to get a rough idea of what's brewing!
 
 ---
