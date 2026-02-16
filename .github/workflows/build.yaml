@@ -32,11 +32,16 @@ jobs:
       - name: Build with xcodebuild
         run: |
           xcodebuild -project Swiftcord.xcodeproj -scheme Swiftcord -configuration 'App Store' archive -archivePath Swiftcord.xcarchive \
+          -archivePath $RUNNER_TEMP/Swiftcord.xcarchive \
           COMPILER_INDEX_STORE_ENABLE=NO \
           CODE_SIGNING_ALLOWED=NO
 
       - name: Create Release DMG
-        run: npm i -g create-dmg && create-dmg Export/Swiftcord.app
+        if: always()
+        run: |
+          APP_PATH="$RUNNER_TEMP/Swiftcord.xcarchive/Products/Applications/Swiftcord.app"
+          npm i -g create-dmg
+          create-dmg "$APP_PATH"
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
