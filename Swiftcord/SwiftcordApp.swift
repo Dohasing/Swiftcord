@@ -105,7 +105,6 @@ struct SwiftcordApp: App {
 				.environmentObject(gateway)
 				.environmentObject(state)
 				.environmentObject(acctManager)
-				.environmentObject(updaterViewModel)
 				.preferredColorScheme(
 					selectedTheme == "dark"
 					? .dark
