@@ -35,15 +35,14 @@ jobs:
           COMPILER_INDEX_STORE_ENABLE=NO \
           CODE_SIGNING_ALLOWED=NO
 
-      - name: Create Release DMG
+      - name: Create Release ZIP
         if: always()
         run: |
           APP_PATH="$RUNNER_TEMP/Swiftcord.xcarchive/Products/Applications/Swiftcord.app"
-          npm i -g create-dmg
-          create-dmg "$APP_PATH"
+          zip -r Swiftcord.zip "$APP_PATH"
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: swiftcord-canary
-          path: Swiftcord*.dmg
+          name: swiftcord
+          path: Swiftcord.zip
