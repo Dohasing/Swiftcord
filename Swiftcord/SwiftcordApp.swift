@@ -24,9 +24,6 @@ struct SwiftcordApp: App {
 	internal static let legacyTokenKeychainKey = "authToken"
 
 	// let persistenceController = PersistenceController.shared
-	#if !APP_STORE
-	@StateObject var updaterViewModel = UpdaterViewModel()
-	#endif
 	@StateObject private var gateway = DiscordGateway()
 	@StateObject private var state = UIState()
 	@StateObject private var acctManager = AccountSwitcher()
