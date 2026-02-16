@@ -1,0 +1,45 @@
+name: Build Swiftcord
+
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: ref-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-nightly:
+    runs-on: macos-14
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 15.0.1
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.0.1'
+
+      - name: Install sentry-cli
+        run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.12.0" bash
+
+      - name: Reset SPM
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData
+          rm -f Swiftcord.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+
+      - name: Build with xcodebuild
+        run: |
+          xcodebuild -project Swiftcord.xcodeproj -scheme Swiftcord -configuration 'App Store' archive -archivePath Swiftcord.xcarchive \
+          COMPILER_INDEX_STORE_ENABLE=NO \
+          CODE_SIGNING_ALLOWED=NO
+
+      - name: Create Release DMG
+        run: npm i -g create-dmg && create-dmg Export/Swiftcord.app
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiftcord-canary
+          path: Swiftcord*.dmg
