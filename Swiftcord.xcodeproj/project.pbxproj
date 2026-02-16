@@ -1938,8 +1938,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		DAFD470528996DFC0075D71B /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
