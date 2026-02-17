@@ -45,5 +45,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: swiftcord
+          name: SwiftcordApp
           path: Swiftcord.zip

@@ -1,4 +1,4 @@
-<p align=center><image src="https://raw.githubusercontent.com/SwiftcordApp/.github/main/res/swiftcord_new_icon.png" height="256" /></p>
+<p align=center><image src="https://github.com/Dohasing/Swiftcord/blob/main/GITHUB-Resources/AppIcon.tiff" height="256" /></p>
 
 <h1 align="center">Swiftcord</h1>
 

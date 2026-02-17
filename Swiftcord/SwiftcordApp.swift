@@ -88,12 +88,6 @@ struct SwiftcordApp: App {
 			}
 		}
 		.commands {
-		#if !APP_STORE
-			CommandGroup(after: .appInfo) {
-				CheckForUpdatesView(updaterViewModel: updaterViewModel)
-			}
-		#endif
-
 			SidebarCommands()
 			NavigationCommands(state: state, gateway: gateway)
 		}
