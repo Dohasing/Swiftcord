@@ -113,7 +113,7 @@ struct ServerView: View {
             // MARK: Channel List
             VStack(spacing: 0) {
                 if let guild = guild {
-                                    ChannelList(channels: guild.properties.name == "DMs" ? gateway.cache.dms : guild.channels, selCh: $serverCtx.channel)
+                    ChannelList(channels: guild.properties.name == "DMs" ? gateway.cache.dms : guildCtx.channels.compactMap { try? $0.unwrap() }, selCh: $serverCtx.channel)
                                         .equatable()
                                         .toolbar {
                                             ToolbarItem {
