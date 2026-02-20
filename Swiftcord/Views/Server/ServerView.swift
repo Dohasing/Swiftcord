@@ -112,38 +112,28 @@ struct ServerView: View {
         NavigationView {
             // MARK: Channel List
             VStack(spacing: 0) {
-                if let guildCtx = guild {
-                        // Modern channel list with glass effect
-                        ChannelList(channels: guildCtx.properties.name == "DMs" ? gateway.cache.dms : guildCtx.channels.compactMap { try? $0.unwrap() }, selCh: $serverCtx.channel)
-                          .environmentObject(serverCtx)
-                          .background(.ultraThinMaterial)
-                          .toolbar {
-                            ToolbarItem {
-                              HStack {
-                                Text(guildCtx.properties.name == "DMs" ? "dm" : "\(guildCtx.properties.name)")
-                                  .font(.title3)
-                                  .fontWeight(.semibold)
-                                  .foregroundColor(.primary)
-                                
-                                Spacer()
-                                
-                                Button(action: toggleSidebar) {
-                                  Image(systemName: "sidebar.left")
-                                    .font(.title2)
-                                    .foregroundColor(.secondary)
+                if let guild = guild {
+                                    ChannelList(channels: guild.properties.name == "DMs" ? gateway.cache.dms : guild.channels, selCh: $serverCtx.channel)
+                                        .equatable()
+                                        .toolbar {
+                                            ToolbarItem {
+                                                Text(guild.properties.name == "DMs" ? "dm" : "\(guild.properties.name)")
+                                                    .font(.title3)
+                                                    .fontWeight(.semibold)
+                                                    .frame(maxWidth: 208) // Largest width before disappearing
+                                            }
+                                        }
+                                        .onChange(of: serverCtx.channel?.id) { newID in
+                                            guard let newID = newID else { return }
+                                            UserDefaults.standard.setValue(
+                                                newID,
+                                                forKey: "lastCh.\(serverCtx.guild!.id)"
+                                            )
+                                        }
+                                } else {
+                                    ZStack {}
+                                        .frame(minWidth: 240, maxHeight: .infinity)
                                 }
-                                .buttonStyle(.plain)
-                              }
-                              .padding(.horizontal, 16)
-                              .padding(.trailing, 12)
-                              .padding(.vertical, 8)
-                            }
-                          }
-                          .frame(maxWidth: .infinity, maxHeight: .infinity)
-                      } else {
-					ZStack {}
-						.frame(minWidth: 240, maxHeight: .infinity)
-				}
 
                 if !gateway.connected || !gateway.reachable {
                     Label(
