@@ -151,7 +151,8 @@ struct ContentView: View {
                 .padding(.bottom, 8)
                 .frame(width: 72)
             }
-            .background(List {}.listStyle(.sidebar).overlay(.black.opacity(0.2)))
+            .background(.regularMaterial)
+            .safeAreaPadding(.top)
             .frame(maxHeight: .infinity, alignment: .top)
 
             Divider()
@@ -167,7 +168,7 @@ struct ContentView: View {
             )
         }
         .safeAreaInset(edge: .top) {
-            Divider().background(.ultraThinMaterial)
+            Divider()
         }
         .environmentObject(audioManager)
 
