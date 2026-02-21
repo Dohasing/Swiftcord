@@ -171,9 +171,10 @@ struct ServerView: View {
                 .background(.gray.opacity(0.15))
             }
         }
-        .navigationViewStyle(.columns)
+        .background(.regularMaterial)
         .environmentObject(serverCtx)
         .navigationTitle("")
+        .navigationViewStyle(.columns)
         .toolbar {
             ToolbarItemGroup(placement: .navigation) {
                 HStack {
