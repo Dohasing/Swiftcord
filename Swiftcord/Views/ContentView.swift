@@ -151,8 +151,12 @@ struct ContentView: View {
                 .padding(.bottom, 8)
                 .frame(width: 72)
             }
-            .background(.regularMaterial)
-            .safeAreaPadding(.top)
+            .padding(.top, Self.insetOffset)
+            .background(
+                Color.clear
+                    .background(.regularMaterial)
+            )
+            .clipped()
             .frame(maxHeight: .infinity, alignment: .top)
 
             Divider()
