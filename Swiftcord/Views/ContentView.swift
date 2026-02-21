@@ -169,6 +169,99 @@ struct ContentView: View {
             Divider().background(.ultraThinMaterial)
         }
         .environmentObject(audioManager)
+        .safeAreaInset(edge: .top) {
+            Divider().background(.ultraThinMaterial)
+        }
+        .environmentObject(audioManager)
+
+        .onChange(of: state.selectedGuildID) { id in
+            guard let id = id else { return }
+            UserDefaults.standard.set(id.description, forKey: "lastSelectedGuild")
+        }
+
+        .onChange(of: state.loadingState) { newState in
+
+            if newState == .gatewayConn {
+                loadLastSelectedGuild()
+            }
+
+            if newState == .messageLoad,
+               !seenOnboarding || prevBuild != Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+
+                if !seenOnboarding {
+                    presentingOnboarding = true
+                }
+
+                Task {
+                    do {
+                        whatsNewMarkdown = try await GitHubAPI
+                            .getReleaseByTag(
+                                org: "SwiftcordX",
+                                repo: "Swiftcord",
+                                tag: "v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] ?? "")"
+                            )
+                            .body
+                    } catch {
+                        skipWhatsNew = true
+                        return
+                    }
+
+                    presentingOnboarding = true
+                }
+            }
+        }
+
+        .onAppear {
+
+            if state.loadingState == .messageLoad {
+                loadLastSelectedGuild()
+            }
+
+            _ = gateway.onEvent.addHandler { evt in
+                switch evt {
+
+                case .userReady(let payload):
+                    state.loadingState = .gatewayConn
+                    accountsManager.onSignedIn(with: payload.user)
+                    fallthrough
+
+                case .resumed:
+                    gateway.send(
+                        .voiceStateUpdate,
+                        data: GatewayVoiceStateUpdate(
+                            guild_id: nil,
+                            channel_id: nil,
+                            self_mute: state.selfMute,
+                            self_deaf: state.selfDeaf,
+                            self_video: false
+                        )
+                    )
+
+                default:
+                    break
+                }
+            }
+
+            _ = gateway.socket?.onSessionInvalid.addHandler {
+                state.loadingState = .initial
+            }
+        }
+
+        .sheet(isPresented: $presentingOnboarding) {
+            seenOnboarding = true
+            prevBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        } content: {
+            OnboardingView(
+                skipOnboarding: seenOnboarding,
+                skipWhatsNew: $skipWhatsNew,
+                newMarkdown: $whatsNewMarkdown,
+                presenting: $presentingOnboarding
+            )
+        }
+
+        .sheet(isPresented: $presentingAddServer) {
+            ServerJoinView(presented: $presentingAddServer)
+        }
     }
 
     // MARK: Types
