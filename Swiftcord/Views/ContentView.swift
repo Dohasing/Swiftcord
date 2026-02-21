@@ -154,6 +154,7 @@ struct ContentView: View {
             .background(List {}.listStyle(.sidebar).overlay(.black.opacity(0.2)))
             .frame(maxHeight: .infinity, alignment: .top)
 
+            Divider()
             // MARK: ServerView
 
             ServerView(
@@ -165,10 +166,6 @@ struct ContentView: View {
                 serverCtx: state.serverCtx
             )
         }
-        .safeAreaInset(edge: .top) {
-            Divider().background(.ultraThinMaterial)
-        }
-        .environmentObject(audioManager)
         .safeAreaInset(edge: .top) {
             Divider().background(.ultraThinMaterial)
         }

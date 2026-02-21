@@ -114,7 +114,6 @@ struct ServerView: View {
             VStack(spacing: 0) {
                 if let guild = guild {
                     ChannelList(channels: guild.properties.name == "DMs" ? gateway.cache.dms : guild.channels.compactMap { try? $0.unwrap() }, selCh: $serverCtx.channel)
-                                        .equatable()
                                         .toolbar {
                                             ToolbarItem {
                                                 Text(guild.properties.name == "DMs" ? "dm" : "\(guild.properties.name)")
@@ -123,6 +122,8 @@ struct ServerView: View {
                                                     .frame(maxWidth: 208) // Largest width before disappearing
                                             }
                                         }
+                                        .frame(minWidth: 240, idealWidth: 240, maxWidth: 240)
+                                        .equatable()
                                         .onChange(of: serverCtx.channel?.id) { newID in
                                             guard let newID = newID else { return }
                                             UserDefaults.standard.setValue(
@@ -170,6 +171,7 @@ struct ServerView: View {
 				.background(.gray.opacity(0.15))
 			}
         }
+        .navigationViewStyle(.columns)
 		.environmentObject(serverCtx)
         .navigationTitle("")
         .toolbar {
