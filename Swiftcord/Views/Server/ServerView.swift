@@ -150,6 +150,8 @@ struct ServerView: View {
                 }
                 if let user = gateway.cache.user { CurrentUserFooter(user: user) }
             }
+            .frame(maxHeight: .infinity, alignment: .top)
+            .background(.regularMaterial)
 
             // MARK: Message History
             if serverCtx.channel != nil, serverCtx.guild != nil {
@@ -171,10 +173,10 @@ struct ServerView: View {
                 .background(.gray.opacity(0.15))
             }
         }
-        .background(.regularMaterial)
         .environmentObject(serverCtx)
         .navigationTitle("")
         .navigationViewStyle(.columns)
+        .background(Color(NSColor.windowBackgroundColor))
         .toolbar {
             ToolbarItemGroup(placement: .navigation) {
                 HStack {
