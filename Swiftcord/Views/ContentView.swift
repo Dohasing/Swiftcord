@@ -8,12 +8,15 @@ struct ContentView: View {
     private static var insetOffset: CGFloat {
         if #available(macOS 13.0, *) { return 0 } else { return -13 }
     }
+    
+    private let titlebarHeight: CGFloat = 28
 
     @State private var loadingGuildID: Snowflake?
     @State private var presentingOnboarding = false
     @State private var presentingAddServer = false
     @State private var skipWhatsNew = false
     @State private var whatsNewMarkdown: String?
+    
 
     @StateObject private var audioManager = AudioCenterManager()
 
@@ -149,12 +152,16 @@ struct ContentView: View {
                     .padding(.bottom, 4)
                 }
                 .padding(.bottom, 8)
-                .frame(width: 72)
             }
-            .padding(.top, Self.insetOffset)
+            .frame(width: 72)
             .background(
-                Color.clear
-                    .background(.regularMaterial)
+                VStack(spacing: 0) {
+                    Color.clear.frame(height: titlebarHeight)
+
+                    Rectangle()
+                        .fill(.regularMaterial)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             )
             .clipped()
             .frame(maxHeight: .infinity, alignment: .top)
