@@ -160,7 +160,6 @@ struct ContentView: View {
 
                     Rectangle()
                         .fill(.regularMaterial)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             )
             .clipped()

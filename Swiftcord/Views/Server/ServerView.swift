@@ -151,7 +151,7 @@ struct ServerView: View {
                 if let user = gateway.cache.user { CurrentUserFooter(user: user) }
             }
             .frame(maxHeight: .infinity, alignment: .top)
-            .background(.regularMaterial)
+            .background(Color(NSColor.windowBackgroundColor))
 
             // MARK: Message History
             if serverCtx.channel != nil, serverCtx.guild != nil {
