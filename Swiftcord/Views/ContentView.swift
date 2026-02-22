@@ -17,7 +17,16 @@ struct ContentView: View {
     @State private var skipWhatsNew = false
     @State private var whatsNewMarkdown: String?
     
-
+    struct TopSafeArea: ViewModifier {
+        func body(content: Content) -> some View {
+            if #available(macOS 14.0, *) {
+                content.safeAreaPadding(.top)
+            } else {
+                content.padding(.top, 28)
+            }
+        }
+    }
+    
     @StateObject private var audioManager = AudioCenterManager()
 
     @EnvironmentObject var gateway: DiscordGateway
@@ -154,17 +163,9 @@ struct ContentView: View {
                 .padding(.bottom, 8)
             }
             .frame(width: 72)
-            .background(
-                VStack(spacing: 0) {
-                    Color.clear.frame(height: titlebarHeight)
-
-                    Rectangle()
-                        .fill(.regularMaterial)
-                }
-            )
-            .clipped()
-            .frame(maxHeight: .infinity, alignment: .top)
-
+            .background(Color.clear)
+            .modifier(TopSafeArea())
+            
             Divider()
             // MARK: ServerView
 
@@ -176,9 +177,6 @@ struct ContentView: View {
                    : gateway.cache.guilds[state.selectedGuildID!]),
                 serverCtx: state.serverCtx
             )
-        }
-        .safeAreaInset(edge: .top) {
-            Divider()
         }
         .environmentObject(audioManager)
 

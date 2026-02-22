@@ -177,6 +177,11 @@ struct ServerView: View {
         .navigationTitle("")
         .navigationViewStyle(.columns)
         .background(Color(NSColor.windowBackgroundColor))
+        .ignoresSafeArea(.container, edges: [])
+        .overlay(alignment: .topLeading) {
+            Divider()
+                .padding(.leading, 240)
+        }
         .toolbar {
             ToolbarItemGroup(placement: .navigation) {
                 HStack {
