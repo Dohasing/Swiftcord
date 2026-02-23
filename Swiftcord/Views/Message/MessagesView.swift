@@ -195,7 +195,6 @@ struct MessagesView: View {
     }
     
     private var history: some View {
-        
         ForEach(Array(viewModel.messages.enumerated()), id: \.1.id) { (idx, msg) in
             let isLastItem = idx == viewModel.messages.count-1
             let shrunk = !isLastItem && msg.messageIsShrunk(prev: viewModel.messages[idx+1])
@@ -208,10 +207,10 @@ struct MessagesView: View {
                 if newMsg {
                     UnreadDivider()
                         .onAppear {
-                            if (viewModel.messages[idx+1].author.id != gateway.cache.user?.id) {
+                            if (viewModel.messages[idx].author.username != gateway.cache.user?.username) {
                                 showLocalNotification(
-                                    title: viewModel.messages[idx+1].author.username,
-                                    body: viewModel.messages[idx+1].content
+                                    title: viewModel.messages[idx].author.username,
+                                    body: viewModel.messages[idx].content
                                 )
                             }
                         }
@@ -345,13 +344,18 @@ struct MessagesView: View {
                 inputContainer(channel: channel)
             }
         }
+        .background(VisualEffect()
+            .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
+        )
         // Blur the area behind the toolbar so the content doesn.background(.ultraThinMaterial)'t show thru
         .safeAreaInset(edge: .top) {
             VStack {
                 Divider().frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity)
-            .background(.ultraThinMaterial)
+            .background(VisualEffect()
+                .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
+            )
         }
         .frame(minWidth: 525, minHeight: 500)
         // .blur(radius: viewModel.dropOver ? 8 : 0)
@@ -369,7 +373,9 @@ struct MessagesView: View {
                         .opacity(0.75)
                 }
                 .padding(24)
-                .background(.thickMaterial)
+                .background(VisualEffect()
+                    .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
+                )
             }
         }
         .animation(.easeOut(duration: 0.2), value: viewModel.dropOver)
