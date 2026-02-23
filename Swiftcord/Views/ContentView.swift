@@ -20,7 +20,7 @@ struct ContentView: View {
     struct TopSafeArea: ViewModifier {
         func body(content: Content) -> some View {
             if #available(macOS 14.0, *) {
-                content.safeAreaPadding(.top)
+                content.safeAreaPadding(.top, 28)
             } else {
                 content.padding(.top, 28)
             }
@@ -108,11 +108,9 @@ struct ContentView: View {
     }
 
     var body: some View {
-
         HStack(spacing: 0) {
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 8) {
-
                     ServerButton(
                         selected: state.selectedGuildID == "@me",
                         name: "Home",
@@ -163,8 +161,9 @@ struct ContentView: View {
                 .padding(.bottom, 8)
             }
             .frame(width: 72)
-            .background(Color.clear)
-            .modifier(TopSafeArea())
+            .background(VisualEffect()
+                .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
+            )
             
             Divider()
             // MARK: ServerView
@@ -178,6 +177,13 @@ struct ContentView: View {
                 serverCtx: state.serverCtx
             )
         }
+        
+        .overlay(alignment: .top) {
+            Rectangle()
+                .fill(Color(NSColor.separatorColor))
+                .frame(height: 1)
+        }
+        
         .environmentObject(audioManager)
 
         .onChange(of: state.selectedGuildID) { id in

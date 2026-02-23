@@ -11,6 +11,22 @@ import DiscordKitCore
 import CachedAsyncImage
 import Introspect
 import Combine
+import UserNotifications
+
+func showLocalNotification(title: String, body: String) {
+    let content = UNMutableNotificationContent()
+    content.title = title
+    content.body = body
+    content.sound = .default
+
+    let request = UNNotificationRequest(
+        identifier: UUID().uuidString,
+        content: content,
+        trigger: nil
+    )
+
+    UNUserNotificationCenter.current().add(request)
+}
 
 extension View {
     public func flip() -> some View {
@@ -56,7 +72,7 @@ struct MessagesViewHeader: View {
     let chl: Channel?
 
     @EnvironmentObject var gateway: DiscordGateway
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             if chl?.type == .dm {
@@ -151,7 +167,7 @@ struct MessagesView: View {
             ForEach(0..<10) { _ in
                 LoFiMessageView().padding(.vertical, 8)
             }
-        }
+        }.background(.ultraThinMaterial)
         .fixedSize(horizontal: false, vertical: true)
     }
 
@@ -177,8 +193,9 @@ struct MessagesView: View {
         .equatable()
         .listRowBackground(msg.mentions(gateway.cache.user?.id) ? Color.orange.opacity(0.1) : .clear)
     }
-
+    
     private var history: some View {
+        
         ForEach(Array(viewModel.messages.enumerated()), id: \.1.id) { (idx, msg) in
             let isLastItem = idx == viewModel.messages.count-1
             let shrunk = !isLastItem && msg.messageIsShrunk(prev: viewModel.messages[idx+1])
@@ -188,7 +205,17 @@ struct MessagesView: View {
             if !isLastItem, let channelID = ctx.channel?.id {
                 let newMsg = gateway.readState[channelID]?.last_message_id?.stringValue == viewModel.messages[idx+1].id
 
-                if newMsg { UnreadDivider() }
+                if newMsg {
+                    UnreadDivider()
+                        .onAppear {
+                            if (viewModel.messages[idx+1].author.id != gateway.cache.user?.id) {
+                                showLocalNotification(
+                                    title: viewModel.messages[idx+1].author.username,
+                                    body: viewModel.messages[idx+1].content
+                                )
+                            }
+                        }
+                }
                 if !shrunk && !newMsg {
                     Spacer(minLength: 16 - MessageView.lineSpacing / 2)
                 }
@@ -318,7 +345,7 @@ struct MessagesView: View {
                 inputContainer(channel: channel)
             }
         }
-        // Blur the area behind the toolbar so the content doesn't show thru
+        // Blur the area behind the toolbar so the content doesn.background(.ultraThinMaterial)'t show thru
         .safeAreaInset(edge: .top) {
             VStack {
                 Divider().frame(maxWidth: .infinity)

@@ -38,8 +38,6 @@ struct AboutSwiftcordView: View {
 			.padding(.top, 8)
 			.padding(.bottom, 16)
 		} footer: {
-			Button("Check for Updates…", action: updaterViewModel.checkForUpdates)
-				.disabled(!updaterViewModel.canCheckForUpdates)
 		}
 
 		Section {

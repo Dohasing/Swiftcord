@@ -108,34 +108,32 @@ struct ServerView: View {
     }
 
     var body: some View {
-        let _ = print("rerender server")
         NavigationView {
             // MARK: Channel List
             VStack(spacing: 0) {
-                if let guild = guild {
-                    ChannelList(channels: guild.properties.name == "DMs" ? gateway.cache.dms : guild.channels.compactMap { try? $0.unwrap() }, selCh: $serverCtx.channel)
-                                        .equatable()
-                                        .toolbar {
-                                            ToolbarItem {
-                                                Text(guild.properties.name == "DMs" ? "dm" : "\(guild.properties.name)")
-                                                    .font(.title3)
-                                                    .fontWeight(.semibold)
-                                                    .frame(maxWidth: 208) // Largest width before disappearing
-                                            }
-                                        }
-                                        .frame(minWidth: 240, idealWidth: 240, maxWidth: 240)
-                                        .onChange(of: serverCtx.channel?.id) { newID in
-                                            guard let newID = newID else { return }
-                                            UserDefaults.standard.setValue(
-                                                newID,
-                                                forKey: "lastCh.\(serverCtx.guild!.id)"
-                                            )
-                                        }
-                                } else {
-                                    ZStack {}
-                                        .frame(minWidth: 240, maxHeight: .infinity)
-                                }
-
+                if let guildCtx = guild {
+                    ChannelList(channels: guildCtx.properties.name == "DMs" ? gateway.cache.dms : guildCtx.channels.compactMap { try? $0.unwrap() }, selCh: $serverCtx.channel)
+                        .equatable()
+                        .toolbar {
+                            ToolbarItem {
+                                Text(guildCtx.properties.name == "DMs" ? "dm" : "\(guildCtx.properties.name)")
+                                  .font(.title3)
+                                  .fontWeight(.semibold)
+                                  .foregroundColor(.primary)
+                            }
+                        }
+                        .onChange(of: serverCtx.channel?.id) { newID in
+                            guard let newID = newID else { return }
+                            UserDefaults.standard.setValue(
+                                newID,
+                                forKey: "lastCh.\(serverCtx.guild!.id)"
+                            )
+                        }
+                } else {
+                    ZStack {}
+                        .frame(minWidth: 240, maxHeight: .infinity)
+                }
+                
                 if !gateway.connected || !gateway.reachable {
                     Label(
                         gateway.reachable
@@ -150,9 +148,9 @@ struct ServerView: View {
                 }
                 if let user = gateway.cache.user { CurrentUserFooter(user: user) }
             }
-            .frame(maxHeight: .infinity, alignment: .top)
-            .background(Color(NSColor.windowBackgroundColor))
-
+            .background(VisualEffect()
+                .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
+            )
             // MARK: Message History
             if serverCtx.channel != nil, serverCtx.guild != nil {
                 MessagesView()
@@ -170,18 +168,10 @@ struct ServerView: View {
                 }
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(.gray.opacity(0.15))
             }
         }
         .environmentObject(serverCtx)
         .navigationTitle("")
-        .navigationViewStyle(.columns)
-        .background(Color(NSColor.windowBackgroundColor))
-        .ignoresSafeArea(.container, edges: [])
-        .overlay(alignment: .topLeading) {
-            Divider()
-                .padding(.leading, 240)
-        }
         .toolbar {
             ToolbarItemGroup(placement: .navigation) {
                 HStack {
