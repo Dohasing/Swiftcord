@@ -17,6 +17,12 @@
 
 <p align="center">Native Discord client for macOS built in Swift</p>
 
+> [!WARNING]
+> I have fully moved my development time and attention to the next generation of Swiftcord, which means I will not be
+> The next version of Swiftcord will be called SwiftyCord and will be under version X - 10.0.0, you can find more here - [SwiftyCord](https://github.com/Dohasing/SwiftyCord)!
+> 
+> We are very near to release, and I can't wait to let everyone experience the future of Swiftcord!
+
 [![](https://github.com/SwiftcordApp/.github/blob/main/res/hero.webp?raw=true)](https://github.com/SwiftcordApp/.github/blob/main/res/swiftcord-promo.mov?raw=true)
 ###### This image doesn't animate properly in Safari, unfortunately. Click on it to view the original video.
 
