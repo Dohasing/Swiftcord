@@ -113,7 +113,6 @@ struct ServerView: View {
             VStack(spacing: 0) {
                 if let guildCtx = guild {
                     ChannelList(channels: guildCtx.properties.name == "DMs" ? gateway.cache.dms : guildCtx.channels.compactMap { try? $0.unwrap() }, selCh: $serverCtx.channel)
-                        .equatable()
                         .toolbar {
                             ToolbarItem {
                                 Text(guildCtx.properties.name == "DMs" ? "dm" : "\(guildCtx.properties.name)")
@@ -148,9 +147,13 @@ struct ServerView: View {
                 }
                 if let user = gateway.cache.user { CurrentUserFooter(user: user) }
             }
-            .background(VisualEffect()
-                .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
-            )
+            .safeAreaInset(edge: .top) {
+                VStack(spacing: 0) {
+                    Divider()
+                }
+                .frame(maxWidth: .infinity)
+                .background(.ultraThinMaterial)
+            }
             // MARK: Message History
             if serverCtx.channel != nil, serverCtx.guild != nil {
                 MessagesView()
@@ -168,6 +171,7 @@ struct ServerView: View {
                 }
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.gray.opacity(0.15))
             }
         }
         .environmentObject(serverCtx)
@@ -177,12 +181,13 @@ struct ServerView: View {
                 HStack {
                     Button {
                         NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-                    } label: {
+                    }
+                    label: {
                         Image(
                             systemName: serverCtx.channel?.type == .dm
                             ? "at"
                             : (serverCtx.channel?.type == .groupDM ? "person.2.fill" : "number")
-                        ).foregroundColor(.primary.opacity(0.8))
+                        )
                     }
                     Text(serverCtx.channel?.label(gateway.cache.users) ?? "No Channel")
                         .font(.title2)

@@ -1844,7 +1844,7 @@
 				364299A2286801C900483D0A /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "App Store";
+			defaultConfigurationName = Release;
 		};
 		DA4A887F27C0AF3000720909 /* Build configuration list for PBXProject "Swiftcord" */ = {
 			isa = XCConfigurationList;
@@ -1854,7 +1854,7 @@
 				364298B82867FF8800483D0A /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "App Store";
+			defaultConfigurationName = Release;
 		};
 		DA4A889827C0AF3200720909 /* Build configuration list for PBXNativeTarget "Swiftcord" */ = {
 			isa = XCConfigurationList;
@@ -1864,7 +1864,7 @@
 				364298B92867FF8800483D0A /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "App Store";
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

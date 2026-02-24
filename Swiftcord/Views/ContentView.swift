@@ -17,14 +17,9 @@ struct ContentView: View {
     @State private var skipWhatsNew = false
     @State private var whatsNewMarkdown: String?
     
-    struct TopSafeArea: ViewModifier {
-        func body(content: Content) -> some View {
-            if #available(macOS 14.0, *) {
-                content.safeAreaPadding(.top, 28)
-            } else {
-                content.padding(.top, 28)
-            }
-        }
+    private static var dividerOffset: CGFloat {
+        // #available cannot be used in ternary statements (yet)
+        if #available(macOS 13.0, *) { return -8 } else { return -13 }
     }
     
     @StateObject private var audioManager = AudioCenterManager()
@@ -119,26 +114,26 @@ struct ContentView: View {
                         state.selectedGuildID = "@me"
                     }
                     .padding(.top, 4)
-
+                    
                     HorizontalDividerView().frame(width: 32)
-
+                    
                     ForEach(serverListItems) { item in
                         switch item {
-
+                            
                         case .guild(let guild):
-
+                            
                             ServerButton(
                                 selected: state.selectedGuildID == guild.id ||
-                                          loadingGuildID == guild.id,
+                                loadingGuildID == guild.id,
                                 name: guild.properties.name,
                                 serverIconURL: guild.properties.iconURL(),
                                 isLoading: loadingGuildID == guild.id
                             ) {
                                 state.selectedGuildID = guild.id
                             }
-
+                            
                         case .guildFolder(let folder):
-
+                            
                             ServerFolder(
                                 folder: folder,
                                 selectedGuildID: $state.selectedGuildID,
@@ -146,7 +141,7 @@ struct ContentView: View {
                             )
                         }
                     }
-
+                    
                     ServerButton(
                         selected: false,
                         name: "Add a Server",
@@ -159,15 +154,35 @@ struct ContentView: View {
                     .padding(.bottom, 4)
                 }
                 .padding(.bottom, 8)
+                .frame(width: 72)
+            }
+            .background(
+                List {}
+                    .listStyle(.sidebar)
+                    .overlay(
+                        Rectangle()
+                            .frame(width: 1, alignment: .bottom)
+                            .foregroundColor(Color.clear)
+                            .padding(.top, ContentView.dividerOffset),
+                        alignment: .trailing
+                    )
+                    .overlay(Color.clear)
+            )
+            .frame(maxHeight: .infinity, alignment: .top)
+            .safeAreaInset(edge: .top) {
+                VStack(spacing: 0) {
+                    Divider()
+                }
+                .frame(maxWidth: .infinity)
+                .background(.ultraThinMaterial)
             }
             .frame(width: 72)
-            .background(VisualEffect()
-                .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
-            )
             
-            Divider()
+            .overlay(alignment: .trailing) {
+                Divider()
+            }
             // MARK: ServerView
-
+            
             ServerView(
                 guild: state.selectedGuildID == nil
                 ? nil
@@ -176,12 +191,6 @@ struct ContentView: View {
                    : gateway.cache.guilds[state.selectedGuildID!]),
                 serverCtx: state.serverCtx
             )
-        }
-        
-        .overlay(alignment: .top) {
-            Rectangle()
-                .fill(Color(NSColor.separatorColor))
-                .frame(height: 1)
         }
         
         .environmentObject(audioManager)
@@ -208,7 +217,7 @@ struct ContentView: View {
                     do {
                         whatsNewMarkdown = try await GitHubAPI
                             .getReleaseByTag(
-                                org: "SwiftcordX",
+                                org: "Swiftcord",
                                 repo: "Swiftcord",
                                 tag: "v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] ?? "")"
                             )

@@ -262,7 +262,6 @@ struct MessagesView: View {
             }
             .environment(\.defaultMinListRowHeight, 1) // By SwiftUI's logic, 0 is negative so we use 1 instead
             .scaleEffect(x: -1, y: 1, anchor: .center)
-            .background(.clear)
             .frame(maxHeight: .infinity)
             .padding(.bottom, 24 + 7) // Ensure List doesn't go below text input field (and its border radius)
         }
@@ -344,18 +343,14 @@ struct MessagesView: View {
                 inputContainer(channel: channel)
             }
         }
-        .background(VisualEffect()
-            .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
-        )
+        .background(.ultraThinMaterial)
         // Blur the area behind the toolbar so the content doesn.background(.ultraThinMaterial)'t show thru
         .safeAreaInset(edge: .top) {
             VStack {
                 Divider().frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity)
-            .background(VisualEffect()
-                .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
-            )
+            .background(.ultraThinMaterial)
         }
         .frame(minWidth: 525, minHeight: 500)
         // .blur(radius: viewModel.dropOver ? 8 : 0)
@@ -373,9 +368,7 @@ struct MessagesView: View {
                         .opacity(0.75)
                 }
                 .padding(24)
-                .background(VisualEffect()
-                    .overlay(Color(nsColor: NSColor.controlBackgroundColor).opacity(0.5))
-                )
+                .background(.ultraThickMaterial)
             }
         }
         .animation(.easeOut(duration: 0.2), value: viewModel.dropOver)
