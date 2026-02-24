@@ -18,7 +18,7 @@
 <p align="center">Native Discord client for macOS built in Swift</p>
 
 > [!WARNING]
-> I have fully moved my development time and attention to the next generation of Swiftcord, which means I will not be
+> I have fully moved my development time and attention to the next generation of Swiftcord.
 > The next version of Swiftcord will be called SwiftyCord and will be under version X - 10.0.0, you can find more here - [SwiftyCord](https://github.com/Dohasing/SwiftyCord)!
 > 
 > We are very near to release, and I can't wait to let everyone experience the future of Swiftcord!
