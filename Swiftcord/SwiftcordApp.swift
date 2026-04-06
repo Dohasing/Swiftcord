@@ -1,0 +1,147 @@
+//
+//  Native_DiscordApp.swift
+//  Swiftcord
+//
+//  Created by Vincent Kwok on 19/2/22.
+//
+
+import DiscordKit
+import DiscordKitCore
+import SwiftUI
+import OSLog
+import UserNotifications
+
+// There's probably a better place to put global constants
+let appName = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String
+
+// MARK: Global Objects
+let restAPI = DiscordREST()
+
+fileprivate extension Scene {
+	func contentSizedWindowResizability() -> some Scene {
+		if #available(macOS 13.0, *) {
+			return self.windowResizability(.contentSize)
+		} else {
+			return self
+		}
+	}
+}
+
+@main
+struct SwiftcordApp: App {
+	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+	
+	init() {
+		UNUserNotificationCenter.current()
+			.requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
+	}
+	
+	internal static let tokenKeychainKey = "authTokens"
+	internal static let legacyTokenKeychainKey = "authToken"
+
+	// let persistenceController = PersistenceController.shared
+	@StateObject private var gateway = DiscordGateway()
+	@StateObject private var state = UIState()
+	@StateObject private var acctManager = AccountSwitcher()
+
+	@AppStorage("theme") private var selectedTheme = "system"
+
+	private static let log = Logger(category: "MainApp")
+
+	var body: some Scene {
+		WindowGroup {
+			if state.attemptLogin {
+				LoginView() // Doesn't matter if login view is big enough
+					.environmentObject(gateway)
+					.environmentObject(state)
+					.environmentObject(acctManager)
+					.navigationTitle("Login")
+			} else {
+				ContentView()
+					.overlay(LoadingView())
+					.environmentObject(gateway)
+					.environmentObject(state)
+					.environmentObject(acctManager)
+				// .environment(\.locale, .init(identifier: "zh-Hans"))
+				// .environment(\.managedObjectContext, persistenceController.container.viewContext)
+					.preferredColorScheme(
+						selectedTheme == "dark"
+						? .dark
+						: (selectedTheme == "light" ? .light : nil)
+					)
+					.onAppear {
+						// Fix list assertion errors
+						UserDefaults.standard.set(false, forKey: "NSWindowAssertWhenDisplayCycleLimitReached")
+						
+						guard gateway.socket == nil else { return }
+						guard let token = acctManager.getActiveToken() else {
+							state.attemptLogin = true
+							return
+						}
+						gateway.connect(token: token)
+						restAPI.setToken(token: token)
+						_ = gateway.onAuthFailure.addHandler {
+							Self.log.warning("Auth failed")
+							guard acctManager.getActiveID() != nil else {
+								Self.log.error("Current ID not found! Showing login instead.")
+								state.attemptLogin = true
+								state.loadingState = .initial
+								return
+							}
+							acctManager.invalidate()
+							// Switch to other account if possible
+							if let token = acctManager.getActiveToken() {
+								Self.log.debug("Attempting connection with other account")
+								gateway.connect(token: token)
+								restAPI.setToken(token: token)
+							} else {
+								state.attemptLogin = true
+								state.loadingState = .initial
+							}
+						}
+					}
+			}
+		}
+		.commands {
+			SidebarCommands()
+			NavigationCommands(state: state, gateway: gateway)
+		}
+		.windowStyle(.hiddenTitleBar)
+		.windowToolbarStyle(.unified)
+
+		Settings {
+			SettingsView()
+				.environmentObject(gateway)
+				.environmentObject(state)
+				.environmentObject(acctManager)
+				.preferredColorScheme(
+					selectedTheme == "dark"
+					? .dark
+					: (selectedTheme == "light" ? .light : .none)
+				)
+			.task {
+				// print("run")
+				let window = NSApp.windows.first { $0.identifier?.rawValue == "com_apple_SwiftUI_Settings_window" }!
+				window.toolbarStyle = .unified
+
+				let sidebaritem = "com.apple.SwiftUI.navigationSplitView.toggleSidebar"
+				let index = window.toolbar?.items.firstIndex { $0.itemIdentifier.rawValue == sidebaritem }
+				if let index {
+					window.toolbar?.removeItem(at: index)
+				}
+			}
+		}
+	}
+}
+
+@available(macOS 13, *)
+struct SettingsCommands: View {
+	@Environment(\.openWindow) private var openWindow
+
+	var body: some View {
+		Divider()
+		Button("Settings") {
+			openWindow(id: "settings")
+		}.keyboardShortcut(",", modifiers: .command)
+	}
+}

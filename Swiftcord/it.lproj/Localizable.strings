@@ -1,0 +1,135 @@
+
+
+"onboarding.wip.body" = "Qualcosa non va? Crea un problema su GitHub o lascia un messaggio sul nostro server Discord";
+"onboarding.features.header" = "Ricco di funzionalità";
+/* ====== Actions ====== */
+"action.continue" = "Prosegui";
+
+/* ====== Onboarding ====== */
+"onboarding.title %@" = "Benvenuto su\n%@";
+"onboarding.subtitle" = "Un client Discord costruito e disegnato per macOS";
+"user.roles.one" = "Ruolo";
+"user.roles.many" = "Ruoli";
+"user.roles.loading" = "Caricamento dei ruoli…";
+"user.note" = "Nota";
+
+/* ====== Message ====== */
+"message.edited.shrunk" = " (modificato)";
+"message.edited" = " • Modificato: ";
+"message.gone" = "Il messaggio originale è stato eliminato.";
+"message.reply.attachment" = "Clicca per vedere l'allegato";
+
+/* ====== Server ====== */
+"server.noChannels.header" = "Nessun canale testuale";
+"server.noChannels.body" = "Ti ritrovi in un posto strano. Non hai accesso a nessun canale testuale o non ce ne sono in questo server.";
+"server.channel.header %@ %@" = "Questo è l'inizio del canale #%@. %@";
+"server.channel.title %@" = "Benvenuto su #%@!";
+"server.channel.noCategory" = "Nessuna Categoria";
+"server.composeMsg.hint %@" = "Messaggio #%@";
+"dm" = "Messaggi diretti";
+"dm.header %@" = "Questo è l'inizio della cronologia dei tuoi messaggi con **@%@**.";
+"dm.group.header %@" = "Benvenuto all'inizio del gruppo **%@**.";
+"dm.group.composeMsg.hint %@" = "Messaggio %@";
+"settings.tts.defaultSpeed" = "Predefinita";
+"settings.tts.slower" = "Più lento";
+"settings.tts.faster" = "Più veloce";
+"settings.user.logOut" = "Disconnetti";
+"settings.user.logOut.confirmation" = "Sei sicuro di volerti disconnettere?";
+"settings.app" = "App";
+"settings.app.appearance" = "Aspetto";
+"settings.app.appearance.theme" = "Tema";
+"settings.app.accessibility" = "Accessibilità";
+"settings.app.accessibility.stickers" = "Sticker";
+"settings.app.lang" = "Lingua";
+"settings.app.streamer" = "Modalità Streamer";
+
+/* ====== DMs ====== */
+"dm.noChannels.body" = "Wumpus sta aspettando gli amici. Tu non devi però!";
+"settings.animInteraction" = "Sul client desktop, gli sticker si animeranno posizionando il puntatore sopra di essi o premendoli. Sui client mobile, gli sticker si animeranno tenendoli premuti a lungo.";
+"settings.tts.rate" = "Velocità sintesi vocale";
+"settings.app.accessibility.chatInput" = "Ingresso chat";
+"settings.app.keybinds" = "Associazioni tasti";
+"settings.others.debug.actions" = "Azioni";
+"settings.others.debug.actions.info" = "Non usare le opzioni a meno che tu non sappia cosa stai facendo. Alcune di esse possono essere PeRiCoLoSe!";
+"settings.others.debug.actions.crash" = "Fai crashare Swiftcord (Sul serio)";
+"onboarding.lightweight.header" = "Efficiente — Consumo ridotto di Risorse";
+"onboarding.lightweight.body" = "Fino a 7 volte in meno la RAM rispetto a Discord, con un basso consumo di CPU.";
+"onboarding.wip.header" = "In lavorazione";
+"onboarding.features.body" = "Importanti funzionalità di base, altre sono in fase di realizzazione";
+"onboarding.footer" = "Swiftcord è un software in alpha, con limiti e bug. Attualmente non è pensato a rimpiazzare il client ufficiale, ma spera di poterlo fare un giorno.";
+
+/* ====== Settings ====== */
+"settings.showSendBtn" = "Mostra il bottone Manda messaggio";
+
+/* ====== Loading Cover ====== */
+"loader.tip.header" = "Sai";
+
+/* ====== User ====== */
+"user.bio" = "Su di me";
+"user.roles.none" = "Nessun ruolo";
+"settings.app.voiceVideo" = "Voce & Video";
+"settings.app.notifs" = "Notifiche";
+"%lld dm.group.memberCount" = "%lld Membri";
+"settings.app.textImages" = "Testo & Immagini";
+"dm.composeMsg.hint %@" = "Messaggio @%@";
+"settings.app.advanced" = "Avanzate";
+"login.token.back" = "Aspetta, torna indietro";
+"login.token.login" = "Accesso";
+"loader.panic.logout" = "Ci sta mettendo un po', vuoi disconnetterti?";
+
+/* ====== Login ====== */
+"login.token.title" = "Benvenuto nella schermata segreta di accesso con token!";
+"login.token.input" = "Incolla qui il tuo token di Discord";
+"action.done" = "Fatto";
+"action.close" = "Chiudi";
+"server.join.action" = "Entra nel Server";
+"server.join.fieldHeader" = "Link d'invito";
+"settings.user.phoneNum" = "Numero di telefono";
+"settings.app.advanced.crashes" = "I resoconti dei crash e gli eventi ad essi precedenti saranno inviati a Sentry dopo un crash per migliorare la diagnostica e prevenire crash futuri. Nessun dato privato o identificativo sarà incluso.";
+"settings.app.advanced.analytics.option" = "Invia statistiche anonime all'AppCenter Analytics per migliorare Swiftcord";
+"settings.app.advanced.analytics" = "Metriche d'utilizzo";
+"settings.app.advanced.analytics.caption" = "Tramite AppCenter, un insieme di statistiche (anonime) di Swiftcord (come la lingua scelta, versione dell'app e l'uso di funzionalità) vengono raccolte. Le metriche ottenute saranno usate per migliorare le funzionalità di Swiftcord; non possiamo ricollegarle a te.";
+"settings.user.username" = "Nome utente";
+"settings.user.email" = "Email";
+"server.join.title" = "Entra in un Server";
+"server.join.fieldHeader.joinFail" = "Link d'invito _— Impossibile accettare l'invito_";
+"settings.user.chPwd.caption" = "Inserisci la tua password attuale ed una nuova.";
+"server.join.caption" = "Inserisci un invito in basso per entrare in un server esistente";
+"server.join.fieldHeader.notFound" = "Link d'invito _— L'invito non è valido o è scaduto._";
+"settings.user.chPwd.title" = "Cambia la tua password";
+"server.join.egHeader" = "Gli inviti dovrebbero sembrare come";
+"server.join.fieldHeader.invalid" = "Link d'invito _— Si prega di inserire un link d'invito valido o un codice d'invito._";
+// About
+"settings.others.about" = "Info";
+"settings.others.about.desc" = "Client Discord nativo fatto in Swift e SwiftUI";
+"%@ %@ %@ settings.others.about.ver" = "%@ versione %@ (Build: %@)";
+"settings.others.about.supportPkg" = "Swiftcord è basato su [DiscordKit](https://github.com/SwiftcordApp/DiscordKit), un'implementazione in sviluppo delle API di Discord in Swift";
+// Credits
+"settings.others.credits" = "Crediti";
+"settings.others.credits.headDev" = "Sviluppatore capo";
+"settings.others.credits.about" = "Amo lavorare su Swiftcord, e sviluppare magnifiche e funzionali applicazioni native!";
+"settings.others.credits.whoAmI" = "Vincent Kwok _AKA_ [cryptoAlgorithm](https://github.com/cryptoAlgorithm)";
+"settings.others.about.caption" = "Swiftcord è un software open-source e fatto con il <3. Puoi trovare il suo codice sorgente su [GitHub](https://github.com/SwiftcordApp/Swiftcord). Contributi e segnalazione di problemi sono pure benvenute! Per favore lascia una stella a Swiftcord, mi dà motivazione per continuare a lavorarci su :D";
+"settings.others.credits.contrib" = "Contributori";
+"settings.others.credits.sponsor.patreon" = "Patreon";
+"settings.others.credits.sponsor.engage.header" = "Supporta Swiftcord!";
+"%lld settings.others.credits.contrib.more" = "+ %lld contributori sbalorditivi";
+"settings.others.credits.contrib.note" = "Nota: Include anche alcuni contributori da Weblate";
+"settings.others.credits.sponsor.gh" = "GitHub Sponsors";
+"settings.others.credits.sponsor.desc" = "Considera di supportare Swiftcord! Aiuterebbe a garantire uno stabile futuro al progetto, ed otterrai pure privilegi speciali :D";
+"settings.others.credits.sponsor" = "Sponsors";
+"settings.others.credits.contrib.desc" = "Grazie a tutti coloro che hanno effettuato contributi preziosi! Swiftcord non sarebbe qui senza i vostri contributi!";
+"settings.others.credits.misc.anim" = "Grazie a iJayTD su Reddit per [aver ricreato l'animazione di caricamento di Discord](https://www.reddit.com/r/discordapp/comments/k6s89b/i_recreated_the_discord_loading_animation) e averne permesso l'uso su Swiftcord!";
+"settings.others.credits.misc.discord" = "E infine, grazie a Discord per aver costruito una così meravigliosa community e infrastruttura!";
+"settings.others.credits.sponsor.engage.body" = "Il tuo nome, un'immagine ed una bio di tua scelta potrebbero essere qui! Supporterai direttamente lo sviluppo di Swiftcord con la tua sponsorship. In più, otterrai benefit speciali nel server Discord, e una maggior priorità nel supporto!";
+"settings.others.credits.sponsor.tier1" = "Sostenitori estremamente cool 🧊";
+"settings.others.credits.sponsor.tier2" = "Sostenitori strabilianti 🤯";
+"settings.others.credits.sponsor.tier3" = "Sostenitori Red-hot 🔥";
+"settings.others.credits.contrib.loading" = "Caricando i contributori…";
+"settings.others.credits.contrib.anon" = "Un estremamente generoso e anonimo sostenitore";
+// Presences
+"user.presence.online" = "In linea";
+"user.presence.idle" = "Assente";
+"user.presence.dnd" = "Non disturbare";
+"user.presence.offline" = "Disconnesso";
+"user.presence.invisible" = "Invisibile";
